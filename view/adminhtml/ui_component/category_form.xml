@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="product_position_rules" sortOrder="80">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Product Position Rules</label>
+        </settings>
+        <container name="product_position_rules_container">
+            <htmlContent name="product_position_rules_content">
+                <block name="product_position_rules_block"
+                       class="Hmh\CatalogPositionRules\Block\Adminhtml\Category\ProductPositionRules"
+                       template="Hmh_CatalogPositionRules::category/product_position_rules.phtml"/>
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

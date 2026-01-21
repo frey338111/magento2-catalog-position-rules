@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Hmh\CatalogPositionRules\Api\ProductPositionRuleRepositoryInterface"
+                type="Hmh\CatalogPositionRules\Model\ProductPositionRuleRepository"/>
+    <preference for="Hmh\CatalogPositionRules\Api\Data\ProductPositionRuleSearchResultsInterface"
+                type="Hmh\CatalogPositionRules\Model\ProductPositionRuleSearchResults"/>
+    <preference for="Hmh\CatalogPositionRules\Api\ProductPositionRuleCategoryRepositoryInterface"
+                type="Hmh\CatalogPositionRules\Model\ProductPositionRuleCategoryRepository"/>
+    <preference for="Hmh\CatalogPositionRules\Api\Data\ProductPositionRuleCategorySearchResultsInterface"
+                type="Hmh\CatalogPositionRules\Model\ProductPositionRuleCategorySearchResults"/>
+
+    <virtualType name="Hmh\CatalogPositionRules\Model\Conditions\ProductColor"
+                 type="Hmh\CatalogPositionRules\Model\Conditions\BaseProductAttributeCondition">
+        <arguments>
+            <argument name="label" xsi:type="string">Product Color Match</argument>
+            <argument name="tag" xsi:type="string">product_color_rule</argument>
+            <argument name="attributeCode" xsi:type="string">color</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Hmh\CatalogPositionRules\Model\Conditions\ProductCountryOfManufacturer"
+                 type="Hmh\CatalogPositionRules\Model\Conditions\BaseProductAttributeCondition">
+        <arguments>
+            <argument name="label" xsi:type="string">Product Country of Manufacturer Match</argument>
+            <argument name="tag" xsi:type="string">product_com_rule</argument>
+            <argument name="attributeCode" xsi:type="string">country_of_manufacture</argument>
+        </arguments>
+    </virtualType>
+    <type name="Hmh\CatalogPositionRules\Model\RuleConditionsPool">
+        <arguments>
+            <argument name="conditions" xsi:type="array">
+                <item name="new_product" xsi:type="object">Hmh\CatalogPositionRules\Model\Conditions\NewProduct</item>
+                <item name="product_color_rule" xsi:type="object">Hmh\CatalogPositionRules\Model\Conditions\ProductColor</item>
+                <item name="product_com_rule" xsi:type="object">Hmh\CatalogPositionRules\Model\Conditions\ProductCountryOfManufacturer</item>
+                <item name="sold_in_past_month" xsi:type="object">Hmh\CatalogPositionRules\Model\Conditions\SoldLastMonth</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

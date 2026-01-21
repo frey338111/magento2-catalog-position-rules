@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">hmh_catalog_position_rules_form.hmh_catalog_position_rules_form_data_source</item>
+            <item name="deps" xsi:type="string">hmh_catalog_position_rules_form.hmh_catalog_position_rules_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Catalog Position Rule</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save" class="Hmh\CatalogPositionRules\Block\Adminhtml\Rule\Edit\SaveButton"/>
+        </buttons>
+        <namespace>hmh_catalog_position_rules_form</namespace>
+        <dataScope>data</dataScope>
+    </settings>
+    <dataSource name="hmh_catalog_position_rules_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Hmh\CatalogPositionRules\Ui\DataProvider\ProductPositionRuleFormDataProvider</argument>
+            <argument name="name" xsi:type="string">hmh_catalog_position_rules_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="*/*/save"/>
+        </settings>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label translate="true">General</label>
+        </settings>
+        <field name="id" formElement="hidden">
+            <settings>
+                <dataType>text</dataType>
+                <dataScope>id</dataScope>
+            </settings>
+        </field>
+        <field name="title" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Title</label>
+                <dataScope>title</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+
+        <container name="product_ranking_rules" component="Magento_Ui/js/dynamic-rows/dynamic-rows" template="Hmh_CatalogPositionRules/form/element/product-ranking-rules">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="fallbackResetTpl" xsi:type="string">Magento_Backend/form/element/helper/fallback-reset-link</item>
+                    <item name="componentType" xsi:type="string">dynamicRows</item>
+                    <item name="recordTemplate" xsi:type="string">rules</item>
+                    <item name="deleteButtonLabel" xsi:type="string">Remove</item>
+                    <item name="addButtonLabel" xsi:type="string">Add New Condition</item>
+                    <item name="deleteProperty" xsi:type="boolean">false</item>
+                    <item name="dndConfig" xsi:type="array">
+                        <item name="enabled" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
+            <container name="rules" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Rule Type</item>
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="showFallbackReset" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="condition" formElement="select">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <showFallbackReset>false</showFallbackReset>
+                        <dataType>text</dataType>
+                        <label>Condition</label>
+                        <dataScope>condition</dataScope>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Hmh\CatalogPositionRules\Ui\Component\Options\ConditionLabelOptionSource"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+
+                <field name="operator" formElement="select">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <showFallbackReset>false</showFallbackReset>
+                        <dataType>text</dataType>
+                        <label>Operator</label>
+                        <dataScope>operator</dataScope>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Hmh\CatalogPositionRules\Ui\Component\Options\ConditionOperatorOptionSource"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+
+                <field name="value" formElement="input">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <showFallbackReset>false</showFallbackReset>
+                        <dataType>text</dataType>
+                        <label>Value</label>
+                        <dataScope>value</dataScope>
+                    </settings>
+                </field>
+
+                <field name="score" formElement="select">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                        <showFallbackReset>false</showFallbackReset>
+                        <dataType>int</dataType>
+                        <label>Score</label>
+                        <dataScope>score</dataScope>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Hmh\CatalogPositionRules\Ui\Component\Options\ScoreOptionSource"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+
+                <actionDelete template="Magento_Backend/dynamic-rows/cells/action-delete">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <additionalClasses>
+                            <class name="data-grid-actions-cell">true</class>
+                        </additionalClasses>
+                        <dataType>text</dataType>
+                        <label>Actions</label>
+                        <componentType>actionDelete</componentType>
+                    </settings>
+                </actionDelete>
+            </container>
+        </container>
+    </fieldset>
+</form>

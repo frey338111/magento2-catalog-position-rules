@@ -1,0 +1,104 @@
+<?php
+/** @var \Hmh\CatalogPositionRules\Block\Adminhtml\Category\ProductPositionRules $block */
+$rules = $block->getPositionRules()->getItems();
+$categoryId = (string) $block->getRequest()->getParam('id');
+$currentRuleId = $block->getCurrentRuleId();
+?>
+<?php if(!$block->isEnabled()) :?>
+    <div class="admin__fieldset">
+        <div class="admin__field">
+            <label class="admin__field-label">
+                <span>&nbsp;</span>
+            </label>
+            <div class="admin__field-control">
+                    <div class="message message-notice">
+                        <?= $block->escapeHtml(__('Please enable this feature.')) ?>
+                    </div>
+             </div>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="admin__fieldset">
+        <div class="admin__field">
+            <label class="admin__field-label">
+                <span><?= $block->escapeHtml(__('Rules')) ?></span>
+            </label>
+            <div class="admin__field-control">
+                <?php if (!$rules): ?>
+                    <div class="message message-notice">
+                        <?= $block->escapeHtml(__('No rules available.')) ?>
+                    </div>
+                <?php else: ?>
+                    <ul class="admin__field" style="list-style:none; padding:0; margin:0;">
+                        <?php foreach ($rules as $rule): ?>
+                            <li class="admin__field admin__field-option">
+                                <input
+                                    type="radio"
+                                    class="admin__control-checkbox"
+                                    id="product_position_rule_<?= $block->escapeHtmlAttr((string) $rule->getId()) ?>"
+                                    name="product_position_rules"
+                                    <?= $currentRuleId === (int) $rule->getId() ? 'checked="checked"' : '' ?>
+                                    value="<?= $block->escapeHtmlAttr((string) $rule->getId()) ?>"
+                                />
+                                <label class="admin__field-label" for="product_position_rule_<?= $block->escapeHtmlAttr((string) $rule->getId()) ?>">
+                                    <?= $block->escapeHtml($rule->getTitle()) ?>
+                                </label>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
+        </div>
+        <input type="hidden" name="category_id" value="<?= $block->escapeHtmlAttr($categoryId) ?>" />
+        <div class="admin__field">
+            <div class="admin__field-control">
+                <button type="button"
+                        class="action-default"
+                        id="product-position-rules-calc"
+                        data-calc-url="<?= $block->escapeHtmlAttr($block->getUrl('hmh_catalogpositionrules/category/calculateranking')) ?>">
+                    <span><?= $block->escapeHtml(__('Calculate Ranking')) ?></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    require([
+        'jquery',
+        'mage/translate'
+    ], function ($) {
+        'use strict';
+
+        $('#product-position-rules-calc').on('click', function () {
+            const $button = $(this);
+            const url = $button.data('calc-url');
+            const ruleId = $('input[name="product_position_rules"]:checked').val() || '';
+            const category_id = $('input[name="category_id"]').val() || '';
+
+            $('body').trigger('processStart');
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    form_key: window.FORM_KEY,
+                    rule_id: ruleId,
+                    category_id: category_id
+                }
+            }).always(function () {
+                $('body').trigger('processStop');
+            }).done(function (response) {
+                if (response && response.success === true) {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+                }else{
+                    alert(response.message);
+                }
+            }).fail(function () {
+                alert($.mage.__('Unable to calculate ranking right now.'));
+            });
+        });
+    });
+    </script>
+<?php endif;?>

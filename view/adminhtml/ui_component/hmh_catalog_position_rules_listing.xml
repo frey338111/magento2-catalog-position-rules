@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">hmh_catalog_position_rules_listing.hmh_catalog_position_rules_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/*/edit"/>
+                <class>primary</class>
+                <label translate="true">Add Rule</label>
+            </button>
+        </buttons>
+        <spinner>hmh_catalog_position_rules_columns</spinner>
+        <deps>
+            <dep>hmh_catalog_position_rules_listing.hmh_catalog_position_rules_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="hmh_catalog_position_rules_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+        </settings>
+        <dataProvider class="Hmh\CatalogPositionRules\Ui\DataProvider\ProductPositionRuleDataProvider" name="hmh_catalog_position_rules_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="hmh_catalog_position_rules_columns">
+        <column name="id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="title">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Title</label>
+            </settings>
+        </column>
+        <column name="rule" class="Hmh\CatalogPositionRules\Ui\Component\Listing\Column\RuleRenderer">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Conditions</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Hmh\CatalogPositionRules\Ui\Component\Listing\Column\BlockActions">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

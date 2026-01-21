@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="hmh_product_position_rules" resource="default" engine="innodb" comment="HMH Product Position Rules">
+        <column xsi:type="int" name="id" padding="11" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="varchar" name="title" length="255" nullable="false" comment="Title"/>
+        <column xsi:type="text" name="rule" nullable="false" comment="Rule"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+    <table name="hmh_product_position_rules_category" resource="default" engine="innodb" comment="HMH Product Position Rules Category">
+        <column xsi:type="int" name="id" padding="11" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="rule_id" padding="11" unsigned="true" nullable="false" comment="Rule ID"/>
+        <column xsi:type="int" name="category_id" padding="10" unsigned="true" nullable="false" comment="Category ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="HMH_RULES_CATEGORY_RULE_ID_RULES_ID"
+                    table="hmh_product_position_rules_category" column="rule_id"
+                    referenceTable="hmh_product_position_rules" referenceColumn="id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="HMH_RULES_CATEGORY_CATEGORY_ID_CATALOG_CATEGORY_ENTITY"
+                    table="hmh_product_position_rules_category" column="category_id"
+                    referenceTable="catalog_category_entity" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="HMH_RULES_CATEGORY_RULE_ID" indexType="btree">
+            <column name="rule_id"/>
+        </index>
+        <index referenceId="HMH_RULES_CATEGORY_CATEGORY_ID" indexType="btree">
+            <column name="category_id"/>
+        </index>
+    </table>
+</schema>

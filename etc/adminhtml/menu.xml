@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Hmh_CatalogPositionRules::hmh"
+             title="HMH"
+             module="Hmh_CatalogPositionRules"
+             sortOrder="90"
+             parent="Magento_Backend::content"
+             resource="Hmh_CatalogPositionRules::hmh"/>
+        <add id="Hmh_CatalogPositionRules::catalog_product_position"
+             title="Catalog Product Position"
+             module="Hmh_CatalogPositionRules"
+             sortOrder="10"
+             parent="Hmh_CatalogPositionRules::hmh"
+             action="hmh_catalogpositionrules/rule/index"
+             resource="Hmh_CatalogPositionRules::rules"/>
+    </menu>
+</config>
