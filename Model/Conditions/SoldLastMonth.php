@@ -15,21 +15,33 @@ class SoldLastMonth implements RuleConditionInterface
     private const LABEL = 'Sold in past month';
     private const TAG = 'sold_in_past_month';
 
+    /**
+     * @param ResourceConnection $resourceConnection
+     */
     public function __construct(
         private readonly ResourceConnection $resourceConnection
     ) {
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getLabel(): string
     {
         return self::LABEL;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getTag(): string
     {
         return self::TAG;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function isConditionMatch(ProductInterface $product, ConditionInfoDto $condition): bool
     {
         $qtySoldPastMonth = $this->getQtySoldPastMonth((int) $product->getId(), $product->getStoreId());
@@ -37,6 +49,13 @@ class SoldLastMonth implements RuleConditionInterface
         return $this->compareQuantity($qtySoldPastMonth, $condition);
     }
 
+    /**
+     * Get quantity sold in the past month.
+     *
+     * @param int $productId
+     * @param int|null $storeId
+     * @return float
+     */
     private function getQtySoldPastMonth(int $productId, ?int $storeId = null): float
     {
         $to = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
@@ -69,6 +88,13 @@ class SoldLastMonth implements RuleConditionInterface
         return $result !== null ? (float) $result : 0.0;
     }
 
+    /**
+     * Compare quantity with condition operator and target value.
+     *
+     * @param float $qtySoldPastMonth
+     * @param ConditionInfoDto $condition
+     * @return bool
+     */
     private function compareQuantity(float $qtySoldPastMonth, ConditionInfoDto $condition): bool
     {
         $operator = (string) $condition->getOperator();

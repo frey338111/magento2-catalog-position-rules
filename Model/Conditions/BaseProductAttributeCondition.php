@@ -10,6 +10,12 @@ use Magento\Catalog\Api\Data\ProductInterface;
 
 class BaseProductAttributeCondition implements RuleConditionInterface
 {
+    /**
+     * @param string $label
+     * @param string $tag
+     * @param string $attributeCode
+     * @param AttributeOptionLabelResolver $attributeOptionLabelResolver
+     */
     public function __construct(
         private readonly string $label,
         private readonly string $tag,
@@ -18,16 +24,25 @@ class BaseProductAttributeCondition implements RuleConditionInterface
     ) {
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getLabel(): string
     {
         return $this->label;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getTag(): string
     {
         return $this->tag;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function isConditionMatch(ProductInterface $product, ConditionInfoDto $condition): bool
     {
         $attributeValue = null;

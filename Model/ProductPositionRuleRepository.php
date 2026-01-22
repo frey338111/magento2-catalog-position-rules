@@ -18,6 +18,13 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 class ProductPositionRuleRepository implements ProductPositionRuleRepositoryInterface
 {
+    /**
+     * @param ProductPositionRuleResource $resource
+     * @param ProductPositionRuleFactory $ruleFactory
+     * @param CollectionFactory $collectionFactory
+     * @param ProductPositionRuleSearchResultsInterfaceFactory $searchResultsFactory
+     * @param CollectionProcessorInterface $collectionProcessor
+     */
     public function __construct(
         private readonly ProductPositionRuleResource $resource,
         private readonly ProductPositionRuleFactory $ruleFactory,
@@ -27,6 +34,9 @@ class ProductPositionRuleRepository implements ProductPositionRuleRepositoryInte
     ) {
     }
 
+    /**
+     * @inheritDoc
+     */
     public function save(ProductPositionRuleInterface $rule): ProductPositionRuleInterface
     {
         try {
@@ -41,6 +51,9 @@ class ProductPositionRuleRepository implements ProductPositionRuleRepositoryInte
         return $rule;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getById(int $id): ProductPositionRuleInterface
     {
         $rule = $this->ruleFactory->create();
@@ -53,6 +66,9 @@ class ProductPositionRuleRepository implements ProductPositionRuleRepositoryInte
         return $rule;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getList(SearchCriteriaInterface $searchCriteria): ProductPositionRuleSearchResultsInterface
     {
         $collection = $this->collectionFactory->create();
@@ -66,6 +82,9 @@ class ProductPositionRuleRepository implements ProductPositionRuleRepositoryInte
         return $searchResults;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function delete(ProductPositionRuleInterface $rule): bool
     {
         try {
@@ -80,6 +99,9 @@ class ProductPositionRuleRepository implements ProductPositionRuleRepositoryInte
         return true;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function deleteById(int $id): bool
     {
         return $this->delete($this->getById($id));

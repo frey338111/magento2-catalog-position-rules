@@ -13,16 +13,25 @@ class NewProduct implements RuleConditionInterface
     private const LABEL = 'New Product';
     private const TAG = 'new_product';
 
+    /**
+     * @inheritDoc
+     */
     public function getLabel(): string
     {
         return self::LABEL;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getTag(): string
     {
         return self::TAG;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function isConditionMatch(ProductInterface $product, ConditionInfoDto $condition): bool
     {
         $fromDate = $product->getNewsFromDate();

@@ -19,6 +19,14 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 class ProductPositionRuleCategoryRepository implements ProductPositionRuleCategoryRepositoryInterface
 {
+    /**
+     * @param ProductPositionRuleCategoryResource $resource
+     * @param ProductPositionRuleCategoryFactory $ruleCategoryFactory
+     * @param CollectionFactory $collectionFactory
+     * @param ProductPositionRuleCategorySearchResultsInterfaceFactory $searchResultsFactory
+     * @param CollectionProcessorInterface $collectionProcessor
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     */
     public function __construct(
         private readonly ProductPositionRuleCategoryResource $resource,
         private readonly ProductPositionRuleCategoryFactory $ruleCategoryFactory,
@@ -29,6 +37,9 @@ class ProductPositionRuleCategoryRepository implements ProductPositionRuleCatego
     ) {
     }
 
+    /**
+     * @inheritDoc
+     */
     public function save(ProductPositionRuleCategoryInterface $ruleCategory): ProductPositionRuleCategoryInterface
     {
         try {
@@ -43,6 +54,9 @@ class ProductPositionRuleCategoryRepository implements ProductPositionRuleCatego
         return $ruleCategory;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getById(int $id): ProductPositionRuleCategoryInterface
     {
         $ruleCategory = $this->ruleCategoryFactory->create();
@@ -55,6 +69,9 @@ class ProductPositionRuleCategoryRepository implements ProductPositionRuleCatego
         return $ruleCategory;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getList(SearchCriteriaInterface $searchCriteria): ProductPositionRuleCategorySearchResultsInterface
     {
         $collection = $this->collectionFactory->create();
@@ -68,6 +85,9 @@ class ProductPositionRuleCategoryRepository implements ProductPositionRuleCatego
         return $searchResults;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function delete(ProductPositionRuleCategoryInterface $ruleCategory): bool
     {
         try {
@@ -82,11 +102,17 @@ class ProductPositionRuleCategoryRepository implements ProductPositionRuleCatego
         return true;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function deleteById(int $id): bool
     {
         return $this->delete($this->getById($id));
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getByCategoryId(int $categoryId): ?ProductPositionRuleCategoryInterface
     {
         $searchCriteria = $this->searchCriteriaBuilder
